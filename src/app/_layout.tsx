@@ -6,13 +6,12 @@ import "./global.css";
 export default function RootLayout() {
   return (
     <>
-      <Navbar />
-
       <Stack
         screenOptions={{
           headerShown: false,
         }}
       />
+      <Navbar />
     </>
   );
 }
