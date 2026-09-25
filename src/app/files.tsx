@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function HomeScreen() {
+export default function FileScreen() {
   return (
     <View>
-      <Text>Home Page</Text>
+      <Text>File Page</Text>
     </View>
   );
 }
