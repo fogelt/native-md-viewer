@@ -28,7 +28,6 @@ export function ToolBar({
 }: ToolBarProps) {
   return (
     <View className="rounded-lg border border-zinc-200 bg-white p-2 shadow-sm">
-      {/* Text */}
       <View className="gap-1">
         <ToolButton
           onPress={() => onFormat("**", "**")}
@@ -43,7 +42,6 @@ export function ToolBar({
 
       <Divider />
 
-      {/* Headings */}
       <View className="gap-1">
         <ToolButton
           onPress={() => onFormat("# ")}
@@ -58,7 +56,6 @@ export function ToolBar({
 
       <Divider />
 
-      {/* Lists */}
       <View className="gap-1">
         <ToolButton
           onPress={() => onFormat("- ")}
@@ -78,7 +75,6 @@ export function ToolBar({
 
       <Divider />
 
-      {/* Code / links */}
       <View className="gap-1">
         <ToolButton
           onPress={() => onFormat("```\n", "\n```")}
@@ -103,7 +99,6 @@ export function ToolBar({
 
       <Divider />
 
-      {/* AI */}
       <Pressable
         onPress={onAssist}
         disabled={isAssisting}
@@ -113,6 +108,7 @@ export function ToolBar({
           <Loader2
             size={16}
             color="#3f3f46"
+            className="animate-spin"
           />
         ) : (
           <Wand
