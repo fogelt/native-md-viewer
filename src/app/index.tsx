@@ -1,24 +1,40 @@
 import { markdownApi } from "@/api/client";
 import { Canvas } from "@/components/ui";
+import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { TextInput, View } from "react-native";
 
 export default function CanvasPage() {
+  const { content: importedContent, fileName: importedFileName } =
+    useLocalSearchParams<{
+      content?: string;
+      fileName?: string;
+    }>();
+
   const [content, setContent] = useState("");
   const [isAssisting, setIsAssisting] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [hasEdited, setHasEdited] = useState(false);
-
   const [selection, setSelection] = useState({
     start: 0,
     end: 0,
   });
 
-  const selectionRef = useRef({
-    start: 0,
-    end: 0,
-  });
+  const textareaRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (importedContent === undefined) return;
+
+    setContent(importedContent);
+    setFileName(importedFileName ?? null);
+    setSaved(true);
+    setHasEdited(false);
+    setSelection({
+      start: 0,
+      end: 0,
+    });
+  }, [importedContent, importedFileName]);
 
   useEffect(() => {
     if (!hasEdited) return;
@@ -39,13 +55,16 @@ export default function CanvasPage() {
               file,
             });
 
-          const textData = await rawRes.raw.text();
+          const textData =
+            await rawRes.raw.text();
 
           let newName = "";
 
           try {
             const json = JSON.parse(textData);
-            newName = json.fileName || json.FileName;
+            newName =
+              json.fileName ||
+              json.FileName;
           } catch {
             newName = textData;
           }
@@ -70,18 +89,11 @@ export default function CanvasPage() {
     return () => clearTimeout(timeout);
   }, [content, fileName, hasEdited]);
 
-  const handleSelectionChange = (start: number, end: number) => {
-    const nextSelection = {
-      start,
-      end,
-    };
-
-    selectionRef.current = nextSelection;
-    setSelection(nextSelection);
-  };
-
-  const format = (before: string, after = "") => {
-    const { start, end } = selectionRef.current;
+  const format = (
+    before: string,
+    after = ""
+  ) => {
+    const { start, end } = selection;
 
     const selected = content.slice(start, end);
 
@@ -92,17 +104,18 @@ export default function CanvasPage() {
       after +
       content.slice(end);
 
-    const nextSelection = {
-      start: start + before.length,
-      end: start + before.length + selected.length,
-    };
-
-    selectionRef.current = nextSelection;
+    const cursorStart =
+      start + before.length;
+    const cursorEnd =
+      cursorStart + selected.length;
 
     setContent(nextContent);
+    setSelection({
+      start: cursorStart,
+      end: cursorEnd,
+    });
     setSaved(false);
     setHasEdited(true);
-    setSelection(nextSelection);
   };
 
   const assist = async () => {
@@ -135,16 +148,21 @@ export default function CanvasPage() {
   };
 
   return (
-    <View className="flex-1 bg-zinc-50 px-4 pb-20 pt-4">
+    <View className="flex-1 bg-zinc-50 px-4 mb-20 pb-2 pt-4">
       <Canvas
         value={content}
-        selection={selection}
         onChange={(value) => {
           setContent(value);
           setSaved(false);
           setHasEdited(true);
         }}
-        onSelectionChange={handleSelectionChange}
+        selection={selection}
+        onSelectionChange={(start, end) => {
+          setSelection({
+            start,
+            end,
+          });
+        }}
         onFormat={format}
         onAssist={assist}
         isAssisting={isAssisting}

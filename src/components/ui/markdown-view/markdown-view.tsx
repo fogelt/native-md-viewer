@@ -1,5 +1,5 @@
+import Markdown from "@ronradtke/react-native-markdown-display";
 import { ScrollView } from "react-native";
-import Markdown from "react-native-markdown-display";
 
 interface MarkdownViewProps {
   content: string;
@@ -12,6 +12,7 @@ const styles = {
     fontSize: 16,
     lineHeight: 24,
   },
+
   heading1: {
     color: "#18181b",
     fontSize: 28,
@@ -20,6 +21,7 @@ const styles = {
     marginTop: 12,
     marginBottom: 12,
   },
+
   heading2: {
     color: "#18181b",
     fontSize: 24,
@@ -28,6 +30,7 @@ const styles = {
     marginTop: 10,
     marginBottom: 10,
   },
+
   heading3: {
     color: "#18181b",
     fontSize: 20,
@@ -36,30 +39,33 @@ const styles = {
     marginTop: 8,
     marginBottom: 8,
   },
+
   paragraph: {
     color: "#27272a",
     fontSize: 16,
     lineHeight: 24,
-    marginTop: 0,
     marginBottom: 10,
   },
+
   bullet_list: {
-    marginTop: 0,
     marginBottom: 8,
   },
+
   ordered_list: {
-    marginTop: 0,
     marginBottom: 8,
   },
+
   list_item: {
     marginBottom: 4,
   },
+
   blockquote: {
     borderLeftColor: "#d4d4d8",
     borderLeftWidth: 4,
     paddingLeft: 12,
     marginVertical: 8,
   },
+
   code_block: {
     backgroundColor: "#18181b",
     color: "#f4f4f5",
@@ -70,21 +76,25 @@ const styles = {
     lineHeight: 20,
     marginVertical: 8,
   },
+
   code_inline: {
     backgroundColor: "#f4f4f5",
     color: "#27272a",
     fontFamily: "monospace",
-    paddingHorizontal: 4,
   },
+
   link: {
     color: "#2563eb",
   },
+
   strong: {
     fontWeight: "700" as const,
   },
+
   em: {
     fontStyle: "italic" as const,
   },
+
   hr: {
     backgroundColor: "#e4e4e7",
     height: 1,
@@ -101,12 +111,13 @@ export function MarkdownView({
       className={`flex-1 ${className ?? ""}`}
       contentContainerStyle={{
         padding: 16,
-        paddingBottom: 32,
+        paddingBottom: 40,
       }}
       showsVerticalScrollIndicator
-      nestedScrollEnabled
     >
-      <Markdown style={styles}>{content}</Markdown>
+      <Markdown style={styles}>
+        {content}
+      </Markdown>
     </ScrollView>
   );
 }
