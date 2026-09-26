@@ -1,0 +1,6 @@
+.openapi-generator-ignore
+apis/MarkdownApi.ts
+apis/index.ts
+docs/MarkdownApi.md
+index.ts
+runtime.ts
