@@ -148,7 +148,7 @@ export default function CanvasPage() {
   };
 
   return (
-    <View className="flex-1 bg-zinc-50 px-4 mb-20 pb-2 pt-4">
+    <View className="flex-1 bg-zinc-50 px-4 mb-20 pb-2 pt-16">
       <Canvas
         value={content}
         onChange={(value) => {

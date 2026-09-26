@@ -163,7 +163,7 @@ export default function FilesPage() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-zinc-50 px-4 pt-6 mb-20 pb-2">
+    <ScrollView className="flex-1 bg-zinc-50 px-4 pt-16 mb-20 pb-2">
       <View className="mb-6 flex-row items-center justify-between">
         <Text className="text-2xl font-semibold tracking-tight text-zinc-900">
           Server Files
